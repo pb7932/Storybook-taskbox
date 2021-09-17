@@ -7,9 +7,15 @@ import { Task } from 'src/app/models/task.model';
   styleUrls: ['./task-list.component.css']
 })
 export class TaskListComponent {
-
+  tasksInOrder: Task[] = [];
   /** The list of tasks */
-  @Input() tasks: Task[] = [];
+  @Input()
+ set tasks(arr: Task[]) {
+   this.tasksInOrder = [
+     ...arr.filter(t => t.state === 'TASK_PINNED'),
+     ...arr.filter(t => t.state !== 'TASK_PINNED'),
+   ];
+ }
 
   /** Checks if it's in loading state */
   @Input() loading = false;
